@@ -12,9 +12,12 @@
 #include "util/Util.h"
 
 #include <android-base/logging.h>
+#include <android-base/properties.h>
 #include <android-base/strings.h>
 
 namespace aidl::android::hardware::biometrics::fingerprint {
+
+using ::android::base::SetProperty;
 
 namespace {
 constexpr int MAX_ENROLLMENTS_PER_USER = 5;
@@ -67,15 +70,19 @@ Fingerprint::Fingerprint(std::shared_ptr<FingerprintConfig> config) : mConfig(st
             }
             ALOGI("Opened fingerprint HAL, class: %s, module_id: %s", class_name.c_str(),
                   class_module_id.c_str());
+            SetProperty("persist.vendor.sys.fp.vendor", class_name);
             break;
         }
         if (!mDevice) {
             ALOGE("Can't open any fingerprint HAL module");
+            SetProperty("persist.vendor.sys.fp.vendor", "none");
         }
     }
 
     std::string sensorTypeProp = mConfig->get<std::string>("type");
     if (sensorTypeProp == "udfps" || sensorTypeProp == "udfps_optical") {
+        SetProperty("ro.hardware.fp.udfps", "true");
+
         if (sensorTypeProp == "udfps") {
             mSensorType = FingerprintSensorType::UNDER_DISPLAY_ULTRASONIC;
         } else {
