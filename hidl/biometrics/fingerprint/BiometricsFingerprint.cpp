@@ -284,6 +284,12 @@ Return<void> BiometricsFingerprint::onFingerUp() {
     return Void();
 }
 
+Return<void> BiometricsFingerprint::onAuthenticated(uint64_t deviceId, uint32_t fingerId,
+                                                    uint32_t groupId,
+                                                    const hidl_vec<uint8_t>& token) {
+    return mClientCallback->onAuthenticated(deviceId, fingerId, groupId, token);
+}
+
 IBiometricsFingerprint* BiometricsFingerprint::getInstance() {
     if (!sInstance) {
         sInstance = new BiometricsFingerprint();

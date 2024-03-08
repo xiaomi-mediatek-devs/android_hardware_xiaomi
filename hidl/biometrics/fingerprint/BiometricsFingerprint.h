@@ -63,6 +63,12 @@ struct BiometricsFingerprint : public IBiometricsFingerprint {
     Return<void> onFingerDown(uint32_t x, uint32_t y, float minor, float major) override;
     Return<void> onFingerUp() override;
 
+    // Methods from
+    // ::android::hardware::biometrics::fingerprint::V2_1::IBiometricsFingerprintClientCallback
+    // follow.
+    Return<void> onAuthenticated(uint64_t deviceId, uint32_t fingerId, uint32_t groupId,
+                                 const hidl_vec<uint8_t>& token) override;
+
   private:
     static fingerprint_device_t* openHal(const char* class_name);
     static void notify(

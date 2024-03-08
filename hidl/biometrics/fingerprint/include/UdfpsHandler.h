@@ -19,6 +19,8 @@ class UdfpsHandler {
 
     virtual void onAcquired(int32_t result, int32_t vendorCode) = 0;
     virtual void cancel() = 0;
+
+    virtual void onAuthenticated(uint64_t deviceId, uint32_t fingerId, uint32_t groupId, const hidl_vec<uint8_t>& token) = 0;
 };
 
 struct UdfpsHandlerFactory {
