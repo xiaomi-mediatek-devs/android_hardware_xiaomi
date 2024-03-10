@@ -287,6 +287,9 @@ Return<void> BiometricsFingerprint::onFingerUp() {
 Return<void> BiometricsFingerprint::onAuthenticated(uint64_t deviceId, uint32_t fingerId,
                                                     uint32_t groupId,
                                                     const hidl_vec<uint8_t>& token) {
+    if (mUdfpsHandler) {
+        mUdfpsHandler->cancel();
+    }
     return mClientCallback->onAuthenticated(deviceId, fingerId, groupId, token);
 }
 
