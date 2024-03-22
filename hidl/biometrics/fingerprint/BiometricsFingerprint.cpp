@@ -26,7 +26,7 @@ typedef struct fingerprint_hal {
 } fingerprint_hal_t;
 
 static const fingerprint_hal_t kModules[] = {
-        {"fpc", false},        {"fpc_fod", true}, {"goodix", false}, {"goodix_fod", true},
+        {"chipone", false},    {"fpc", false},    {"fpc_fod", true}, {"goodix", false}, {"goodix_fod", true},
         {"goodix_fod6", true}, {"silead", false}, {"syna", true},
 };
 
